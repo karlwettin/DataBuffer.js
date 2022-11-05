@@ -2,6 +2,29 @@
 
 Javascript ArrayBuffer helper for writing a binary stream of primitive signed and unsigned values to a byte array.
 
+I wrote this code when unable to find a simple solution to serialize a set of values to a byte array
+that I could base64 encode to an URL anchor and deserialize back to the original values.
+
+In my case this ment something like:
+```
+let data = new DataBufferWriter(80);
+data.write...;
+let serialized_base64 = btoa(String.fromCharCode.apply(null, data.trim()));
+...
+let hash = $(location).attr('hash');
+let binary_string = atob(hash.substring(1));
+let len = binary_string.length;
+  let bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++)
+    bytes[i] = binary_string.charCodeAt(i);
+    let inflated = pako.inflate(bytes);
+    reader = new DataBufferReader(inflated.buffer);
+  }
+reader.read...;
+
+```
+
+
 Example usage:
 
 ```
